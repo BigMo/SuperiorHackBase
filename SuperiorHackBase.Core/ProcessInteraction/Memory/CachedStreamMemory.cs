@@ -1,18 +1,18 @@
-﻿using System;
+﻿using SuperiorHackBase.Core.ProcessInteraction.Process;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using SuperiorHackBase.Core.Process;
 
-namespace SuperiorHackBase.Core.Memory
+namespace SuperiorHackBase.Core.ProcessInteraction.Memory
 {
     public class CachedStreamMemory : StreamMemory
     {
         private WinAPI.MEMORY_BASIC_INFORMATION pageInfo;
         private byte[] pageData;
 
-        public CachedStreamMemory(IMemory mem, IGameProcess proc) : base(mem, proc)
+        public CachedStreamMemory(IMemory mem, IProcess proc) : base(mem, proc)
         {
             pageInfo = new WinAPI.MEMORY_BASIC_INFORMATION() { RegionSize = IntPtr.Zero };
             pageData = null;
@@ -20,7 +20,7 @@ namespace SuperiorHackBase.Core.Memory
 
         public override int Read(byte[] buffer, int offset, int count)
         {
-            if (!pageInfo.Contains(Position)) //Try to cache page
+            if (!pageInfo.Contains(Position, count)) //Try to cache page
             {
                 //Update pages and recheck before throwing
                 process.UpdatePages();
@@ -28,7 +28,7 @@ namespace SuperiorHackBase.Core.Memory
                     throw new Exception();
 
                 //Dump page
-                pageInfo = process.Pages.First(_page => _page.Contains(Position));
+                pageInfo = process.Pages.First(_page => _page.Contains(Position, count));
                 var _oldPos = Position;
                 Position = pageInfo.BaseAddress.ToInt64();
                 pageData = new byte[pageInfo.RegionSize.ToInt64()];

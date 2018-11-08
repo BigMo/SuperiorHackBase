@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SuperiorHackBase.Core.Memory
+namespace SuperiorHackBase.Core.ProcessInteraction.Memory
 {
     public interface IMemory : IDisposable
     {
@@ -23,8 +23,12 @@ namespace SuperiorHackBase.Core.Memory
         T[] ReadMany<T>(Pointer address, int count) where T : struct;
 
         bool ReadString(Pointer address, out string text, Encoding encoding, byte[] terminator, int bufferSize, int maxByteCount);
+        string ReadString(Pointer address, Encoding encoding, byte[] terminator, int bufferSize, int maxByteCount);
         bool ReadFixedString(Pointer address, out string text, Encoding encoding, int byteCount);
+        string ReadFixedString(Pointer address, int length, Encoding encoding);
 
         bool IsValid(Pointer address);
+        long BytesRead { get; }
+        long BytesWrite { get; }
     }
 }

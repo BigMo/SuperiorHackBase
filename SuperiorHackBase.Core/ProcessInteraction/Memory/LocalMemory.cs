@@ -1,4 +1,4 @@
-﻿using SuperiorHackBase.Core.Process;
+﻿using SuperiorHackBase.Core.ProcessInteraction.Process;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -8,12 +8,15 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SuperiorHackBase.Core.Memory
+namespace SuperiorHackBase.Core.ProcessInteraction.Memory
 {
     public class LocalMemory : IMemory, IDisposable
     {
         public TimeSpan PageCacheDuration { get; set; }
         public IntPtr MemoryHandle { get; private set; }
+
+        public long BytesRead { get; private set; }
+        public long BytesWrite { get; private set; }
 
         private WinAPI.MEMORY_BASIC_INFORMATION[] pageCache;
         private DateTime pageCacheTime;
@@ -40,6 +43,7 @@ namespace SuperiorHackBase.Core.Memory
         {
             IntPtr readBytes = IntPtr.Zero;
             var res = WinAPI.ReadProcessMemory(MemoryHandle, address, data, count, out readBytes);
+            BytesRead += readBytes.ToInt64();
             if (!res || readBytes.ToInt32() != count)
                 if (raiseExceptions)
                     throw new ProcessMemoryException(address, readBytes.ToInt32(), count, Marshal.GetLastWin32Error(), res);
@@ -90,6 +94,7 @@ namespace SuperiorHackBase.Core.Memory
         {
             IntPtr writeBytes = IntPtr.Zero;
             var res = WinAPI.WriteProcessMemory(MemoryHandle, address, data, count, out writeBytes);
+            BytesWrite += writeBytes.ToInt64();
             if (!res || writeBytes.ToInt32() != count)
                 if (raiseExceptions)
                     throw new ProcessMemoryException(address, writeBytes.ToInt32(), count, Marshal.GetLastWin32Error(), res);
@@ -190,6 +195,22 @@ namespace SuperiorHackBase.Core.Memory
             Read(address, buffer);
             text = encoding.GetString(buffer);
             return true;
+        }
+
+        public string ReadString(Pointer address, Encoding encoding, byte[] terminator, int bufferSize, int maxByteCount)
+        {
+            string str = "";
+            if (ReadString(address, out str, encoding, terminator, bufferSize, maxByteCount))
+                return str;
+            return null;
+        }
+
+        public string ReadFixedString(Pointer address, int length, Encoding encoding)
+        {
+            string str = "";
+            if (ReadFixedString(address, out str, encoding, length))
+                return str;
+            return null;
         }
 
         public void Dispose()

@@ -1,19 +1,19 @@
-﻿using SuperiorHackBase.Core.Memory;
+﻿using SuperiorHackBase.Core.ProcessInteraction.Memory;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SuperiorHackBase.Core.Process
+namespace SuperiorHackBase.Core.ProcessInteraction.Process
 {
-    public interface IGameProcess
+    public interface IProcess
     {
         int PID { get; }
         string Name { get; }
         bool IsRunning { get; }
         bool InForeground { get; }
-        IEnumerable<IGameModule> Modules { get; }
+        IEnumerable<IModule> Modules { get; }
         IEnumerable<WinAPI.MEMORY_BASIC_INFORMATION> Pages { get; }
 
         void UpdatePages();

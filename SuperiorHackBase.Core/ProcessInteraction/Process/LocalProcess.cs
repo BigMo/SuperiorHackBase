@@ -1,16 +1,15 @@
-﻿using SuperiorHackBase.Core.Memory;
+﻿using SuperiorHackBase.Core.ProcessInteraction.Memory;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text;
 using System.Threading.Tasks;
 
-namespace SuperiorHackBase.Core.Process
+namespace SuperiorHackBase.Core.ProcessInteraction.Process
 {
-    public class LocalProcess : IGameProcess
+    public class LocalProcess : IProcess
     {
         protected System.Diagnostics.Process Process { get; private set; }
         private IEnumerable<WinAPI.MEMORY_BASIC_INFORMATION> pages;
@@ -20,7 +19,7 @@ namespace SuperiorHackBase.Core.Process
         public bool InForeground => IsRunning && WinAPI.GetForegroundWindow() == Process.MainWindowHandle;
         public int PID => Process.Id;
         public string Name => Process.ProcessName;
-        public IEnumerable<IGameModule> Modules => Process.Modules.Cast<ProcessModule>().Select(x => new LocalModule(x));
+        public IEnumerable<IModule> Modules { get { return Process.Modules.Cast<ProcessModule>().Select(x => new LocalModule(x)); } }
         public IEnumerable<WinAPI.MEMORY_BASIC_INFORMATION> Pages
         {
             get

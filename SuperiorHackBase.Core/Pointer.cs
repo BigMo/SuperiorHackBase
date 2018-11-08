@@ -18,6 +18,7 @@ namespace SuperiorHackBase.Core
         public uint Address32 { get { return (uint)address; } }
         public IntPtr IntPtr { get { return new IntPtr(address); } }
         public static Pointer Zero => new Pointer(0);
+        public static Pointer Max => new Pointer(Is64Bit ? 0x7FFFFFFFFFFFFFFF : 0x7FFFFFFF);
 
         public Pointer(void* address)
         {
@@ -40,7 +41,7 @@ namespace SuperiorHackBase.Core
 
         public override bool Equals(object obj)
         {
-            return obj is Pointer && Equals((Pointer)obj);
+            return obj != null && obj is Pointer && Equals((Pointer)obj);
         }
 
         public override int GetHashCode()
@@ -99,6 +100,30 @@ namespace SuperiorHackBase.Core
         public static Pointer operator -(Pointer ptr, IntPtr offset)
         {
             return new Pointer(ptr.Address64 - (ulong)offset.ToInt64());
+        }
+        public static Pointer operator *(Pointer ptr, int offset)
+        {
+            return new Pointer(ptr.Address64 * (ulong)offset);
+        }
+        public static Pointer operator *(Pointer ptr, long offset)
+        {
+            return new Pointer(ptr.Address64 * (ulong)offset);
+        }
+        public static Pointer operator *(Pointer ptr, IntPtr offset)
+        {
+            return new Pointer(ptr.Address64 * (ulong)offset.ToInt64());
+        }
+        public static Pointer operator /(Pointer ptr, int offset)
+        {
+            return new Pointer(ptr.Address64 / (ulong)offset);
+        }
+        public static Pointer operator /(Pointer ptr, long offset)
+        {
+            return new Pointer(ptr.Address64 / (ulong)offset);
+        }
+        public static Pointer operator /(Pointer ptr, IntPtr offset)
+        {
+            return new Pointer(ptr.Address64 / (ulong)offset.ToInt64());
         }
         public static bool operator ==(Pointer ptrA, Pointer ptrB)
         {

@@ -166,8 +166,24 @@ namespace SuperiorHackBase.Core
             int dwSize,
             out IntPtr lpNumberOfBytesRead);
 
+        [DllImport("ntdll.dll", EntryPoint = "NtReadVirtualMemory")]
+        public static extern int NtReadVirtualMemory(
+            IntPtr hProcess,
+            IntPtr lpBaseAddress,
+            [Out] byte[] lpBuffer,
+            int dwSize,
+            out IntPtr lpNumberOfBytesRead);
+
         [DllImport("kernel32.dll")]
         public static extern bool WriteProcessMemory(
+            IntPtr hProcess,
+            IntPtr lpBaseAddress,
+            byte[] lpBuffer,
+            int dwSize,
+            out IntPtr lpNumberOfBytesWritten);
+
+        [DllImport("ntdll.dll", EntryPoint = "NtWriteVirtualMemory")]
+        public static extern int InternalNtWriteVirtualMemory(
             IntPtr hProcess,
             IntPtr lpBaseAddress,
             byte[] lpBuffer,
@@ -191,7 +207,7 @@ namespace SuperiorHackBase.Core
 
             public Pointer End { get { return (Pointer)BaseAddress + RegionSize; } }
             public Pointer Start { get { return (Pointer)BaseAddress; } }
-            public bool Contains(Pointer address) { return Start <= address && address <= End; }
+            public bool Contains(Pointer address, int size) { return Start <= address && address + size <= End; }
         }
 
         [Flags]
