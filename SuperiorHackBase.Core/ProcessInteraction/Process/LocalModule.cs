@@ -19,5 +19,10 @@ namespace SuperiorHackBase.Core.ProcessInteraction.Process
         {
             Module = module;
         }
+
+        public override string ToString()
+        {
+            return $"{Name} @{BaseAddress} ({Size})";
+        }
     }
 }

@@ -93,5 +93,10 @@ namespace SuperiorHackBase.Core.ProcessInteraction.Process
                 return success;
             });
         }
+
+        public override string ToString()
+        {
+            return $"[{PID}] {Name}";
+        }
     }
 }

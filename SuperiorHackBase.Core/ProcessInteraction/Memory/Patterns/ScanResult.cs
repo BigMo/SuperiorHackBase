@@ -9,26 +9,23 @@ namespace SuperiorHackBase.Core.ProcessInteraction.Memory.Patterns
 {
     public class ScanResult
     {
-        public IModule Module { get; private set; }
-        public Pointer Address { get; private set; }
-        public byte[] Data { get; private set; }
-        public Stack<Pointer> OperandStack { get; private set; }
-        public Dictionary<string,Pointer> Results { get; private set; }
-        public Pointer Result { get { return Results.ContainsKey("Result") ? Results["Result"] : Pointer.Zero; } }
+        public const string DEFAULT_VALUE_NAME = "Value";
 
-        public ScanResult(IModule module, Pointer address, byte[] data) : this (module, address, data, new Stack<Pointer>(), new Dictionary<string, Pointer>())
+        public Dictionary<string,Pointer> Values { get; private set; }
+        public Pointer Value
         {
+            get { return Values.ContainsKey(DEFAULT_VALUE_NAME) ? Values[DEFAULT_VALUE_NAME] : Pointer.Zero; }
+            set { Values[DEFAULT_VALUE_NAME] = value; }
+        }
+        
+        public ScanResult()
+        {
+            Values = new Dictionary<string, Pointer>();
         }
 
-        public ScanResult(IModule module, Pointer address, byte[] data, Stack<Pointer> operandStack, Dictionary<string, Pointer> results)
+        public override string ToString()
         {
-            Module = module;
-            Address = address;
-            Data = data;
-            OperandStack = operandStack;
-            Results = results;
-            if (!results.ContainsKey("Result"))
-                results["Result"] = Pointer.Zero;
+            return string.Join(", ", Values.Select(v => $"{v.Key}={v.Value}").ToArray());
         }
     }
 }

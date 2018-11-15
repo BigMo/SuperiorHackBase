@@ -1,7 +1,9 @@
-﻿namespace SuperiorHackBase.Core.ProcessInteraction.Memory.Patterns
+﻿using System.Collections.Generic;
+
+namespace SuperiorHackBase.Core.ProcessInteraction.Memory.Patterns
 {
     public interface IPatternProcessor
     {
-        ScanResult Process(IHackContext context, ScanResult result);
+        void Process(IHackContext context, PatternFinding finding, Stack<Pointer> operands, ScanResult result);
     }
 }

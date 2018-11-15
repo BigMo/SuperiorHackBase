@@ -9,16 +9,12 @@ namespace SuperiorHackBase.Core.ProcessInteraction.Memory.Patterns.Processors
     [Processor(Pops = 2, Pushes = 1)]
     public abstract class ArithmeticProcessor : IPatternProcessor
     {
-        public ScanResult Process(IHackContext context, ScanResult result)
+        public void Process(IHackContext context, PatternFinding finding, Stack<Pointer> operands, ScanResult result)
         {
-            var stack = result.OperandStack;
-
-            var a = stack.Pop();
-            var b = stack.Pop();
+            var a = operands.Pop();
+            var b = operands.Pop();
             var res = Calculate(a, b);
-            stack.Push(res);
-
-            return result;
+            operands.Push(res);
         }
 
         protected abstract Pointer Calculate(Pointer a, Pointer b);

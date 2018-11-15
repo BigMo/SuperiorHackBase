@@ -11,15 +11,14 @@ namespace SuperiorHackBase.Core.ProcessInteraction.Memory.Patterns.Processors
     {
         public string Name { get; private set; }
 
-        public PushResult(string name = "Result")
+        public PushResult(string name = ScanResult.DEFAULT_VALUE_NAME)
         {
             Name = name;
         }
 
-        public ScanResult Process(IHackContext context, ScanResult result)
+        public void Process(IHackContext context, PatternFinding finding, Stack<Pointer> operands, ScanResult result)
         {
-            result.OperandStack.Push(result.Results[Name]);
-            return result;
+            operands.Push(result.Values[Name]);
         }
     }
 }

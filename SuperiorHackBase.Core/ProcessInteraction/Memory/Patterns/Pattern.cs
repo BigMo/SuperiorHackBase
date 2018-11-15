@@ -16,32 +16,37 @@ namespace SuperiorHackBase.Core.ProcessInteraction.Memory.Patterns
         public Pointer ScanLength { get { return ScanEnd - ScanStart; } }
         public string Module { get; private set; }
         public IPatternProcessor[] Processors { get; private set; }
+        public bool FindMultiple { get; private set; }
 
-        internal Pattern(Pointer from, Pointer to, byte[] bytes, string mask, IPatternProcessor[] processors)
+        internal Pattern(Pointer from, Pointer to, byte[] bytes, string mask, IPatternProcessor[] processors, bool multiple)
         {
             ScanStart = from;
             ScanEnd = to;
             Bytes = bytes;
             Mask = mask;
             Processors = processors;
+            FindMultiple = multiple;
 
             if (Bytes.Length != Mask.Length)
                 throw new Exception("Bytes and Mask have to be of equal length");
         }
 
-        internal Pattern(string module, byte[] bytes, string mask, IPatternProcessor[] processors)
+        internal Pattern(string module, byte[] bytes, string mask, IPatternProcessor[] processors, bool multiple)
         {
             Module = module;
             Bytes = bytes;
             Mask = mask;
             Processors = processors;
+            FindMultiple = multiple;
 
             if (Bytes.Length != Mask.Length)
                 throw new Exception("Bytes and Mask have to be of equal length");
         }
 
-        public ScanResult Find(IHackContext context)
+        public ScanResult[] Find(IHackContext context)
         {
+            var results = new List<ScanResult>();
+
             var from = Pointer.Zero;
             var to = Pointer.Zero;
             IModule module = null;
@@ -83,17 +88,17 @@ namespace SuperiorHackBase.Core.ProcessInteraction.Memory.Patterns
                     {
                         var data = new byte[Bytes.Length];
                         Array.Copy(buffer, b, data, 0, data.Length);
-                        var result = new ScanResult(module, from + b, data);
-                        foreach (var processor in Processors)
-                            result = processor.Process(context, result);
-                        if (result.OperandStack.Count == 1)
-                            result.Results["Result"] = result.OperandStack.Pop();
+                        var finding = new PatternFinding(data, from + b);
+                        var result = finding.Process(context, Processors);
+                        if (!FindMultiple)
+                            return new ScanResult[] { result };
 
-                        return result;
+                        results.Add(result);
+
                     }
                 }
             }
-            return new ScanResult(module, 0, null);
+            return results.ToArray();
         }
     }
 }

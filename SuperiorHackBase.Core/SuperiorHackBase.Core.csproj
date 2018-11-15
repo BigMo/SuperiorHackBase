@@ -60,6 +60,7 @@
     <Compile Include="ProcessInteraction\Memory\Patterns\IPatternProcessor.cs" />
     <Compile Include="ProcessInteraction\Memory\Patterns\OperandType.cs" />
     <Compile Include="ProcessInteraction\Memory\Patterns\PatternBuilder.cs" />
+    <Compile Include="ProcessInteraction\Memory\Patterns\PatternFinding.cs" />
     <Compile Include="ProcessInteraction\Memory\Patterns\Processors\Add.cs" />
     <Compile Include="ProcessInteraction\Memory\Patterns\Processors\And.cs" />
     <Compile Include="ProcessInteraction\Memory\Patterns\Processors\ArithmeticProcessor.cs" />
@@ -69,10 +70,13 @@
     <Compile Include="ProcessInteraction\Memory\Patterns\Processors\PopResult.cs" />
     <Compile Include="ProcessInteraction\Memory\Patterns\Processors\ProcessorAttribute.cs" />
     <Compile Include="ProcessInteraction\Memory\Patterns\Processors\Push.cs" />
+    <Compile Include="ProcessInteraction\Memory\Patterns\Processors\PushBaseAddress.cs" />
     <Compile Include="ProcessInteraction\Memory\Patterns\Processors\PushResult.cs" />
-    <Compile Include="ProcessInteraction\Memory\Patterns\Processors\Read.cs" />
     <Compile Include="ProcessInteraction\Memory\Patterns\Processors\ReadDynamic.cs" />
+    <Compile Include="ProcessInteraction\Memory\Patterns\Processors\ReadLocal.cs" />
+    <Compile Include="ProcessInteraction\Memory\Patterns\Processors\ReadLocalDynamic.cs" />
     <Compile Include="ProcessInteraction\Memory\Patterns\Processors\Substract.cs" />
+    <Compile Include="ProcessInteraction\Memory\Patterns\Processors\Swap.cs" />
     <Compile Include="ProcessInteraction\Memory\Patterns\Processors\Xor.cs" />
     <Compile Include="ProcessInteraction\Memory\Patterns\ScanResult.cs" />
     <Compile Include="ProcessInteraction\Memory\ProcessMemoryException.cs" />

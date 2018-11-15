@@ -41,10 +41,9 @@ namespace SuperiorHackBase.Core.ProcessInteraction
             return new LocalHackContext(proc, mem);
         }
 
-        public ScanResult Scan(Pattern pattern)
+        public ScanResult[] Scan(Pattern pattern)
         {
-            var result = pattern.Find(this);
-            return result;
+            return pattern.Find(this);
         }
 
         private LocalHackContext(IProcess proc, IMemory mem)
