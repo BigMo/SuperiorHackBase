@@ -42,9 +42,17 @@
   <ItemGroup>
     <Compile Include="GameOverlay.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Rendering\AttributeHost.cs" />
+    <Compile Include="Rendering\BufferType.cs" />
+    <Compile Include="Rendering\DescriptorViewType.cs" />
+    <Compile Include="Rendering\Format.cs" />
+    <Compile Include="Rendering\ICommandList.cs" />
+    <Compile Include="Rendering\IDescriptorView.cs" />
+    <Compile Include="Rendering\IGraphicsBuffer.cs" />
+    <Compile Include="Rendering\IGraphicsDevice.cs" />
+    <Compile Include="Rendering\IRenderProgram.cs" />
+    <Compile Include="Rendering\ISwapchain.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Rendering\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
