@@ -6,12 +6,10 @@ using System.Threading.Tasks;
 
 namespace SuperiorHackBase.Graphics.UI.Controls.Events
 {
-    public class CancelableStringEventArgs : StringEventArgs, ICancelable
+    public class CancelableValueEventArgs<T> : ValueEventArgs<T>, ICancelable
     {
         public bool Cancel { get; set; }
 
-        public CancelableStringEventArgs(string oldValue, string newValue) : base(oldValue, newValue)
-        {
-        }
+        public CancelableValueEventArgs(T oldValue, T newValue) : base(oldValue, newValue) { }
     }
 }

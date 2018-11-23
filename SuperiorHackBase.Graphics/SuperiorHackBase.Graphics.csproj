@@ -42,6 +42,7 @@
   <ItemGroup>
     <Compile Include="Color4f.cs" />
     <Compile Include="GameOverlay.cs" />
+    <Compile Include="IFont.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Rendering\AttributeHost.cs" />
     <Compile Include="Rendering\BufferType.cs" />
@@ -58,12 +59,13 @@
     <Compile Include="UI\Controls\CheckState.cs" />
     <Compile Include="UI\Controls\Control.cs" />
     <Compile Include="UI\Controls\ControlState.cs" />
-    <Compile Include="UI\Controls\Events\CancelableStringEventArgs.cs" />
+    <Compile Include="UI\Controls\Events\CancelableControlEventArgs.cs" />
+    <Compile Include="UI\Controls\Events\CancelableValueEventArgs.cs" />
+    <Compile Include="UI\Controls\Dock.cs" />
+    <Compile Include="UI\Controls\Events\ControlEventArgs.cs" />
     <Compile Include="UI\Controls\Events\ICancelable.cs" />
-    <Compile Include="UI\Controls\Events\CancelableVector2EventArgs.cs" />
-    <Compile Include="UI\Controls\Events\StringEventArgs.cs" />
-    <Compile Include="UI\Controls\Events\ValueChangeEventArgs.cs" />
-    <Compile Include="UI\Controls\Events\Vector2EventArgs.cs" />
+    <Compile Include="UI\Controls\Events\ValueEventArgs.cs" />
+    <Compile Include="UI\Controls\Label.cs" />
     <Compile Include="UI\Painting\IControlPaint.cs" />
   </ItemGroup>
   <ItemGroup />
