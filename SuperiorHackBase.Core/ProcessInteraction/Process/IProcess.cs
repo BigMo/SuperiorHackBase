@@ -13,6 +13,7 @@ namespace SuperiorHackBase.Core.ProcessInteraction.Process
         string Name { get; }
         bool IsRunning { get; }
         bool InForeground { get; }
+        IntPtr WindowHandle { get; }
         IEnumerable<IModule> Modules { get; }
         IEnumerable<WinAPI.MEMORY_BASIC_INFORMATION> Pages { get; }
 

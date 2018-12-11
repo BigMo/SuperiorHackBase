@@ -11,6 +11,13 @@ namespace SuperiorHackBase.Graphics.UI.Controls
 {
     public abstract class Control
     {
+        #region CONSTANTS
+        private static FontDescription DEFAULT_FONT = new FontDescription("Segoe UI", 12f);
+        private static Color4f DEFAULT_COLOR_BORDER = new Color4f(0f, 0f, 0f);
+        private static Color4f DEFAULT_COLOR_BACK = new Color4f(1f, 1f, 1f);
+        private static Color4f DEFAULT_COLOR_FORE = new Color4f(0.2f, 0.2f, 0.2f);
+        #endregion
+
         #region EVENTS
         //Protected events to intercept and, if so desired, cancel changes
         protected event EventHandler<CancelableValueEventArgs<Vector2>> PositionChanging;
@@ -33,10 +40,18 @@ namespace SuperiorHackBase.Graphics.UI.Controls
         public event EventHandler<ValueEventArgs<Vector2>> PaddingChanged;
         protected event EventHandler<ControlEventArgs> ChildAdded;
         protected event EventHandler<ControlEventArgs> ChildRemoved;
-        public event EventHandler EnabledChanged;        
+        public event EventHandler EnabledChanged;
         #endregion
 
         #region PROPERTIES
+        protected bool RecalculateSize { get; set; }
+        public Color4f BorderColor { get; set; }
+        public Color4f ForegroundColor { get; set; }
+        public Color4f BackgroundColor { get; set; }
+        public bool DrawBorder { get; set; }
+        public bool DrawBackground { get; set; }
+        public bool DrawText { get; set; }
+
         public bool Enabled
         {
             get { return parent != null ? parent.Enabled && enabled : enabled; }
@@ -192,7 +207,7 @@ namespace SuperiorHackBase.Graphics.UI.Controls
                     OnTextChange(text, value);
             }
         }
-        public IFont Font { get; set; }
+        public FontDescription Font { get; set; }
         #endregion
 
         #region VARIABLES
@@ -222,12 +237,17 @@ namespace SuperiorHackBase.Graphics.UI.Controls
             enabled = true;
             dock = Dock.None;
             autoSize = false;
+
+            Font = DEFAULT_FONT;
+            BackgroundColor = DEFAULT_COLOR_BACK;
+            ForegroundColor = DEFAULT_COLOR_FORE;
+            BorderColor = DEFAULT_COLOR_BORDER;
+            DrawBackground = DrawBorder = DrawText = true;
         }
         #endregion
 
         #region ABSTRACT METHODS
-        public abstract void Draw(IControlPaint controlPaint); //TODO: Interface?
-        protected abstract Vector2 CalculateSize();
+        public abstract void Draw(IRenderer renderer); //TODO: Interface?
         #endregion
 
         #region PUBLIC METHODS
@@ -294,14 +314,14 @@ namespace SuperiorHackBase.Graphics.UI.Controls
                     break;
             }
         }
-        private void AdjustAutoSize()
-        {
-            if (autoSize)
-            {
-                var size = CalculateSize();
-                Resize(size);
-            }
-        }
+        //private void AdjustAutoSize()
+        //{
+        //    if (autoSize)
+        //    {
+        //        var size = CalculateSize();
+        //        Resize(size);
+        //    }
+        //}
 
         private void Resize(Vector2 size)
         {
@@ -456,7 +476,8 @@ namespace SuperiorHackBase.Graphics.UI.Controls
         }
         protected virtual void OnAutoSizeChanged(bool oldAutoSize, bool newAutoSize)
         {
-            AdjustAutoSize();
+            //AdjustAutoSize();
+            RecalculateSize = true;
             AutoSizeChanged?.Invoke(this, new ValueEventArgs<bool>(oldAutoSize, newAutoSize));
         }
         protected virtual void OnMarginChange(Vector2 oldMargin, Vector2 newMargin, bool allowCancel = true)

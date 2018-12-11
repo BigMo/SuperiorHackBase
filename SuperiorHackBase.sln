@@ -9,6 +9,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SuperiorHackBase.Input", "S
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SuperiorHackBase.Graphics", "SuperiorHackBase.Graphics\SuperiorHackBase.Graphics.csproj", "{ADE5C263-7F06-44D8-B560-3C1D003844E9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SuperiorHackBase.Rendering.SharpDX.D2D1", "SuperiorHackBase.Rendering.SharpDX.D2D1\SuperiorHackBase.Rendering.SharpDX.D2D1.csproj", "{944AAD12-BE36-443E-926C-46F714B4BC74}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SuperiorHackBase.Test", "SuperiorHackBase.Test\SuperiorHackBase.Test.csproj", "{296456FF-A60E-4F07-B436-C26E59C2CD46}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +31,14 @@ Global
 		{ADE5C263-7F06-44D8-B560-3C1D003844E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ADE5C263-7F06-44D8-B560-3C1D003844E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ADE5C263-7F06-44D8-B560-3C1D003844E9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{944AAD12-BE36-443E-926C-46F714B4BC74}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{944AAD12-BE36-443E-926C-46F714B4BC74}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{944AAD12-BE36-443E-926C-46F714B4BC74}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{944AAD12-BE36-443E-926C-46F714B4BC74}.Release|Any CPU.Build.0 = Release|Any CPU
+		{296456FF-A60E-4F07-B436-C26E59C2CD46}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{296456FF-A60E-4F07-B436-C26E59C2CD46}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{296456FF-A60E-4F07-B436-C26E59C2CD46}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{296456FF-A60E-4F07-B436-C26E59C2CD46}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

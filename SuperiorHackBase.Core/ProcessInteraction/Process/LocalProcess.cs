@@ -17,6 +17,7 @@ namespace SuperiorHackBase.Core.ProcessInteraction.Process
 
         public bool IsRunning => !Process.HasExited;
         public bool InForeground => IsRunning && WinAPI.GetForegroundWindow() == Process.MainWindowHandle;
+        public IntPtr WindowHandle => Process.MainWindowHandle;
         public int PID => Process.Id;
         public string Name => Process.ProcessName;
         public IEnumerable<IModule> Modules { get { return Process.Modules.Cast<ProcessModule>().Select(x => new LocalModule(x)); } }
