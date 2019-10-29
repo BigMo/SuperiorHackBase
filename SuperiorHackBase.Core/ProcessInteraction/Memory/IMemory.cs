@@ -27,6 +27,8 @@ namespace SuperiorHackBase.Core.ProcessInteraction.Memory
         bool ReadFixedString(Pointer address, out string text, Encoding encoding, int byteCount);
         string ReadFixedString(Pointer address, int length, Encoding encoding);
 
+        Pointer ResolvePointerChain(Pointer address, params Pointer[] offsets);
+
         bool IsValid(Pointer address);
         long BytesRead { get; }
         long BytesWrite { get; }

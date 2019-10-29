@@ -14,13 +14,21 @@ namespace SuperiorHackBase.Core.ProcessInteraction
         public IProcess Process { get; private set; }
         public IMemory Memory { get; private set; }
 
+        public static IHackContext CreateContext(string processName, bool writeMemory = false)
+        {
+            var flags = WinAPI.ProcessAccessFlags.VirtualMemoryRead;
+            if (writeMemory)
+                flags |= WinAPI.ProcessAccessFlags.VirtualMemoryWrite;
+
+            return CreateContext(processName, flags);
+        }
         public static IHackContext CreateContext(string processName, WinAPI.ProcessAccessFlags flags = WinAPI.ProcessAccessFlags.All)
         {
             var processes = System.Diagnostics.Process.GetProcessesByName(processName);
             if (processes.Length == 0)
-                throw new Exception($"Could not find process \"{processName}\"");
+                throw new Exception($"Could not find process \"{processName}\"!");
             if (processes.Length > 1)
-                throw new Exception($"There are multiple instances of \"{processName}\"");
+                throw new Exception($"There are multiple instances of \"{processName}\"!");
             return CreateContext(processes[0], flags);
         }
 
@@ -28,7 +36,7 @@ namespace SuperiorHackBase.Core.ProcessInteraction
         {
             var process = System.Diagnostics.Process.GetProcessById(pid);
             if (process == null)
-                throw new Exception($"Could not find process by id {pid}");
+                throw new Exception($"Could not find process with id {pid}!");
 
             return CreateContext(process, flags);
         }

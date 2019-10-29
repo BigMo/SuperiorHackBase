@@ -52,7 +52,7 @@ namespace SuperiorHackBase.Core.ProcessInteraction.Memory.Patterns
             IModule module = null;
             if (!string.IsNullOrEmpty(Module))
             {
-                module = context.Process.Modules.FirstOrDefault(x => x.Name == Module);
+                module = context.Process.FindModule(Module);
                 if (module == null)
                     throw new Exception($"Module \"{Module}\" not found");
 

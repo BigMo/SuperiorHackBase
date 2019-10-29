@@ -35,7 +35,7 @@ namespace SuperiorHackBase.Core.ProcessInteraction.Memory
 
             MemoryHandle = WinAPI.OpenProcess(flags, false, process.PID);
             if (MemoryHandle == IntPtr.Zero)
-                throw new Exception("Failed to aquire memory handle", new Win32Exception(Marshal.GetLastWin32Error()));
+                throw new Exception("Failed to acquire memory handle", new Win32Exception(Marshal.GetLastWin32Error()));
         }
 
         #region Read
@@ -46,7 +46,7 @@ namespace SuperiorHackBase.Core.ProcessInteraction.Memory
             BytesRead += readBytes.ToInt64();
             if (!res || readBytes.ToInt32() != count)
                 if (raiseExceptions)
-                    throw new ProcessMemoryException(address, readBytes.ToInt32(), count, Marshal.GetLastWin32Error(), res);
+                    throw new ReadWriteMemoryException(address, readBytes.ToInt32(), count, Marshal.GetLastWin32Error(), res);
                 else
                     return false;
 
@@ -97,7 +97,7 @@ namespace SuperiorHackBase.Core.ProcessInteraction.Memory
             BytesWrite += writeBytes.ToInt64();
             if (!res || writeBytes.ToInt32() != count)
                 if (raiseExceptions)
-                    throw new ProcessMemoryException(address, writeBytes.ToInt32(), count, Marshal.GetLastWin32Error(), res);
+                    throw new ReadWriteMemoryException(address, writeBytes.ToInt32(), count, Marshal.GetLastWin32Error(), res);
                 else
                     return false;
 
@@ -121,7 +121,7 @@ namespace SuperiorHackBase.Core.ProcessInteraction.Memory
             return Write(address, buffer);
         }
         #endregion
-        
+
 
         public bool WriteString(Pointer address, string text, Encoding encoding, byte[] terminator)
         {
@@ -272,6 +272,23 @@ namespace SuperiorHackBase.Core.ProcessInteraction.Memory
         public bool IsValid(Pointer address)
         {
             return process.Pages.Any(x => address >= x.BaseAddress && address <= x.BaseAddress + (Pointer)x.RegionSize);
+        }
+
+        public Pointer ResolvePointerChain(Pointer baseAddress, params Pointer[] offsets)
+        {
+            var address = baseAddress;
+            for (var i = 0; i < offsets.Length - 1; i++)
+            {
+                try
+                {
+                    address = Read<Pointer>(address + offsets[i]);
+                }
+                catch (Exception ex)
+                {
+                    throw new PointerChainException(baseAddress, offsets, i, ex);
+                }
+            }
+            return address + offsets[offsets.Length - 1];
         }
     }
 }

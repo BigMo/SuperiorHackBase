@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace SuperiorHackBase.Core
 {
-    public static class SizeCache<T> where T : struct
+    internal static class SizeCache<T> where T : struct
     {
         public static int Size { get; private set; }
 

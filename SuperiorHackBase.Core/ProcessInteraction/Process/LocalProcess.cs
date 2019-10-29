@@ -30,7 +30,6 @@ namespace SuperiorHackBase.Core.ProcessInteraction.Process
             }
         }
 
-
         public LocalProcess(System.Diagnostics.Process proc)
         {
             Process = proc ?? throw new ArgumentException("Process must not be null");
@@ -42,13 +41,20 @@ namespace SuperiorHackBase.Core.ProcessInteraction.Process
                 throw new Exception("Failed to aquire CRT handle", new Win32Exception(Marshal.GetLastWin32Error()));
         }
 
+        public static LocalProcess Find(string name)
+        {
+            var procs = System.Diagnostics.Process.GetProcessesByName(name);
+            if (procs.Length > 0)
+                return new LocalProcess(procs[0]);
+            return null;
+        }
+
         public static async Task<LocalProcess> WaitForProcess(string name)
         {
             while (true)
             {
-                var procs = System.Diagnostics.Process.GetProcessesByName(name);
-                if (procs.Length > 0)
-                    return new LocalProcess(procs[0]);
+                var proc = Find(name);
+                if (proc != null) return proc;
 
                 await Task.Delay(TimeSpan.FromMilliseconds(500));
             }
@@ -97,6 +103,11 @@ namespace SuperiorHackBase.Core.ProcessInteraction.Process
         public override string ToString()
         {
             return $"[{PID}] {Name}";
+        }
+
+        public IModule FindModule(string name)
+        {
+            return Modules.FirstOrDefault(x => x.Name == name);
         }
     }
 }

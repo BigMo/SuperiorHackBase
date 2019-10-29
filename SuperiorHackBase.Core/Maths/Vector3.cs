@@ -61,7 +61,7 @@ namespace SuperiorHackBase.Core.Maths
         }
         public override string ToString()
         {
-            return string.Format("[Vec3 X={0}, Y={1}, Z={2}]", X, Y, Z);
+            return string.Format("[Vec3 X={0}, Y={1}, Z={2}", X, Y, Z);
         }
         #endregion
 

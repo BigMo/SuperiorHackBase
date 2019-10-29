@@ -19,5 +19,6 @@ namespace SuperiorHackBase.Core.ProcessInteraction.Process
         void UpdatePages();
         Task<bool> Execute(Pointer function, Pointer parameter);
         IMemory CreateMemoryInterface();
+        IModule FindModule(string name);
     }
 }
