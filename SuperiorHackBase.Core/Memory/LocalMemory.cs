@@ -15,6 +15,9 @@ namespace SuperiorHackBase.Core.Memory
         public TimeSpan PageCacheDuration { get; set; }
         public IntPtr MemoryHandle { get; private set; }
 
+        public long BytesRead { get; private set; }
+        public long BytesWrite { get; private set; }
+
         private WinAPI.MEMORY_BASIC_INFORMATION[] pageCache;
         private DateTime pageCacheTime;
         private LocalProcess process;
@@ -40,6 +43,7 @@ namespace SuperiorHackBase.Core.Memory
         {
             IntPtr readBytes = IntPtr.Zero;
             var res = WinAPI.ReadProcessMemory(MemoryHandle, address, data, count, out readBytes);
+            BytesRead += readBytes.ToInt64();
             if (!res || readBytes.ToInt32() != count)
                 if (raiseExceptions)
                     throw new ProcessMemoryException(address, readBytes.ToInt32(), count, Marshal.GetLastWin32Error(), res);
@@ -90,6 +94,7 @@ namespace SuperiorHackBase.Core.Memory
         {
             IntPtr writeBytes = IntPtr.Zero;
             var res = WinAPI.WriteProcessMemory(MemoryHandle, address, data, count, out writeBytes);
+            BytesWrite += writeBytes.ToInt64();
             if (!res || writeBytes.ToInt32() != count)
                 if (raiseExceptions)
                     throw new ProcessMemoryException(address, writeBytes.ToInt32(), count, Marshal.GetLastWin32Error(), res);

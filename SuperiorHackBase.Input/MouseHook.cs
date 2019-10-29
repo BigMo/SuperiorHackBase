@@ -9,7 +9,7 @@ using System.Windows.Forms;
 
 namespace SuperiorHackBase.Input
 {
-    public class MouseHook : WindowsHook
+    public sealed class MouseHook : WindowsHook
     {
         public event EventHandler<MouseEventExtArgs> MouseEvent;
 

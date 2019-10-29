@@ -9,7 +9,7 @@ using System.Windows.Forms;
 
 namespace SuperiorHackBase.Input
 {
-    public class Keyboard : WindowsHook
+    public sealed class Keyboard : WindowsHook
     {
         public event KeyEventHandler KeyUp;
         public event KeyEventHandler KeyDown;

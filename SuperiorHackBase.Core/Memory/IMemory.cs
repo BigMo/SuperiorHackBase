@@ -26,5 +26,7 @@ namespace SuperiorHackBase.Core.Memory
         bool ReadFixedString(Pointer address, out string text, Encoding encoding, int byteCount);
 
         bool IsValid(Pointer address);
+        long BytesRead { get; }
+        long BytesWrite { get; }
     }
 }

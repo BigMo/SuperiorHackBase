@@ -31,9 +31,13 @@ namespace SuperiorHackBase.Input
             if (hHook == IntPtr.Zero)
                 throw new Win32Exception(Marshal.GetLastWin32Error());
         }
+
+        struct day { public int[] Activities; }
         public void Unhook()
         {
             WinAPI.UnhookWindowsHookEx(hHook);
+            var today = new day();
+            foreach (var activity in today.Activities) Console.WriteLine();
         }
 
         private IntPtr HookCallback(int nCode, int wParam, IntPtr lParam)
