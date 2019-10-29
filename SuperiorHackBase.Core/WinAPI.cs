@@ -207,7 +207,7 @@ namespace SuperiorHackBase.Core
 
             public Pointer End { get { return (Pointer)BaseAddress + RegionSize; } }
             public Pointer Start { get { return (Pointer)BaseAddress; } }
-            public bool Contains(Pointer address) { return Start <= address && address <= End; }
+            public bool Contains(Pointer address, int size) { return Start <= address && address + size <= End; }
         }
 
         [Flags]

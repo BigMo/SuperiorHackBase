@@ -1,4 +1,4 @@
-﻿using SuperiorHackBase.Core.Process;
+﻿using SuperiorHackBase.Core.ProcessInteraction.Process;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -6,13 +6,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SuperiorHackBase.Core.Memory
+namespace SuperiorHackBase.Core.ProcessInteraction.Memory
 {
     public class StreamMemory : Stream
     {
         private long position;
         protected IMemory memory;
-        protected IGameProcess process;
+        protected IProcess process;
 
         public override bool CanRead { get; } = true;
         public override bool CanSeek { get; } = true;
@@ -30,14 +30,14 @@ namespace SuperiorHackBase.Core.Memory
                     {
                         process.UpdatePages(); //Update pages once and re-check before throwing
                         if (!IsInPages(value))
-                            throw new Exception();
+                            throw new Exception("Address outside of paged memory");
                     }
                     position = value;
                 }
             }
         }
 
-        public StreamMemory(IMemory mem, IGameProcess proc)
+        public StreamMemory(IMemory mem, IProcess proc)
         {
             memory = mem;
             process = proc;
@@ -45,7 +45,7 @@ namespace SuperiorHackBase.Core.Memory
 
         protected bool IsInPages(Pointer address)
         {
-            return process.Pages.Any(p => p.Contains(address));
+            return process.Pages.Any(p => p.Contains(address, 0));
         }
         public override void Flush() { throw new NotImplementedException(); }
 

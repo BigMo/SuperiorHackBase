@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SuperiorHackBase.Core.Memory
+namespace SuperiorHackBase.Core.ProcessInteraction.Memory
 {
     public class ProcessMemoryException : Exception
     {

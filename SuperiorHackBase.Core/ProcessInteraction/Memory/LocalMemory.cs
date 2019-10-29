@@ -1,4 +1,4 @@
-﻿using SuperiorHackBase.Core.Process;
+﻿using SuperiorHackBase.Core.ProcessInteraction.Process;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -8,7 +8,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SuperiorHackBase.Core.Memory
+namespace SuperiorHackBase.Core.ProcessInteraction.Memory
 {
     public class LocalMemory : IMemory, IDisposable
     {
@@ -195,6 +195,22 @@ namespace SuperiorHackBase.Core.Memory
             Read(address, buffer);
             text = encoding.GetString(buffer);
             return true;
+        }
+
+        public string ReadString(Pointer address, Encoding encoding, byte[] terminator, int bufferSize, int maxByteCount)
+        {
+            string str = "";
+            if (ReadString(address, out str, encoding, terminator, bufferSize, maxByteCount))
+                return str;
+            return null;
+        }
+
+        public string ReadFixedString(Pointer address, int length, Encoding encoding)
+        {
+            string str = "";
+            if (ReadFixedString(address, out str, encoding, length))
+                return str;
+            return null;
         }
 
         public void Dispose()
