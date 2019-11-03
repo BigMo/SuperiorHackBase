@@ -1747,7 +1747,7 @@ namespace SuperiorHackBase.Core
 
         #region Windows function imports for hooking
 
-        public delegate IntPtr HookProc(int nCode, int wParam, IntPtr lParam);
+        public delegate IntPtr HookProc(int code, IntPtr wParam, IntPtr lParam);
 
         /// <summary>
         /// The CallNextHookEx function passes the hook information to the next hook procedure in the current hook chain. 
@@ -1779,8 +1779,12 @@ namespace SuperiorHackBase.Core
         public static extern IntPtr CallNextHookEx(
             IntPtr idHook,
             int nCode,
-            int wParam,
+            IntPtr wParam,
             IntPtr lParam);
+
+        // overload for use with LowLevelKeyboardProc
+        [DllImport("user32.dll")]
+        public static extern IntPtr CallNextHookEx(IntPtr hhk, int nCode, WindowMessage wParam, [In]KBDLLHOOKSTRUCT lParam);
 
         public enum HookType : int
         {
@@ -1799,6 +1803,25 @@ namespace SuperiorHackBase.Core
             WH_CALLWNDPROCRET = 12,
             WH_KEYBOARD_LL = 13,
             WH_MOUSE_LL = 14
+        }
+
+        [StructLayout(LayoutKind.Sequential)]
+        public class KBDLLHOOKSTRUCT
+        {
+            public uint vkCode;
+            public uint scanCode;
+            public KBDLLHOOKSTRUCTFlags flags;
+            public uint time;
+            public UIntPtr dwExtraInfo;
+        }
+
+        [Flags]
+        public enum KBDLLHOOKSTRUCTFlags : uint
+        {
+            LLKHF_EXTENDED = 0x01,
+            LLKHF_INJECTED = 0x10,
+            LLKHF_ALTDOWN = 0x20,
+            LLKHF_UP = 0x80,
         }
 
         /// <summary>
@@ -1831,13 +1854,9 @@ namespace SuperiorHackBase.Core
         /// <remarks>
         /// http://msdn.microsoft.com/library/default.asp?url=/library/en-us/winui/winui/windowsuserinterface/windowing/hooks/hookreference/hookfunctions/setwindowshookex.asp
         /// </remarks>
-        [DllImport("user32.dll", CharSet = CharSet.Auto,
-            CallingConvention = CallingConvention.StdCall, SetLastError = true)]
-        public static extern IntPtr SetWindowsHookEx(
-            HookType idHook,
-            HookProc lpfn,
-            IntPtr hMod,
-            int dwThreadId);
+
+        [DllImport("user32.dll", SetLastError = true)]
+        public static extern IntPtr SetWindowsHookEx(HookType hookType, HookProc lpfn, IntPtr hMod, uint dwThreadId);
 
         /// <summary>
         /// The UnhookWindowsHookEx function removes a hook procedure installed in a hook chain by the SetWindowsHookEx function. 

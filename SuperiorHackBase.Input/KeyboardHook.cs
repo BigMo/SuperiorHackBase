@@ -9,16 +9,16 @@ using System.Windows.Forms;
 
 namespace SuperiorHackBase.Input
 {
-    public sealed class Keyboard : WindowsHook
+    public class KeyboardHook : WindowsHook
     {
         public event KeyEventHandler KeyUp;
         public event KeyEventHandler KeyDown;
 
-        public Keyboard() : base(WinAPI.HookType.WH_KEYBOARD_LL)
+        public KeyboardHook() : base(WinAPI.HookType.WH_KEYBOARD_LL)
         {
         }
 
-        protected override IntPtr OnHook(int nCode, int wParam, IntPtr lParam)
+        protected override IntPtr OnHook(int nCode, IntPtr wParam, IntPtr lParam)
         {
             if (nCode >= 0)
             {

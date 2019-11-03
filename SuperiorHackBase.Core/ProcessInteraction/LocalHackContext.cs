@@ -9,12 +9,10 @@ using System.Threading.Tasks;
 
 namespace SuperiorHackBase.Core.ProcessInteraction
 {
-    public class LocalHackContext : IHackContext
+    public class LocalHackContext : HackContext
     {
-        public IProcess Process { get; private set; }
-        public IMemory Memory { get; private set; }
-
-        public static IHackContext CreateContext(string processName, bool writeMemory = false)
+        #region CONSTRUCTORS
+        public static HackContext CreateContext(string processName, bool writeMemory = false)
         {
             var flags = WinAPI.ProcessAccessFlags.VirtualMemoryRead;
             if (writeMemory)
@@ -22,7 +20,7 @@ namespace SuperiorHackBase.Core.ProcessInteraction
 
             return CreateContext(processName, flags);
         }
-        public static IHackContext CreateContext(string processName, WinAPI.ProcessAccessFlags flags = WinAPI.ProcessAccessFlags.All)
+        public static HackContext CreateContext(string processName, WinAPI.ProcessAccessFlags flags = WinAPI.ProcessAccessFlags.All)
         {
             var processes = System.Diagnostics.Process.GetProcessesByName(processName);
             if (processes.Length == 0)
@@ -32,7 +30,7 @@ namespace SuperiorHackBase.Core.ProcessInteraction
             return CreateContext(processes[0], flags);
         }
 
-        public static IHackContext CreateContext(int pid, WinAPI.ProcessAccessFlags flags = WinAPI.ProcessAccessFlags.All)
+        public static HackContext CreateContext(int pid, WinAPI.ProcessAccessFlags flags = WinAPI.ProcessAccessFlags.All)
         {
             var process = System.Diagnostics.Process.GetProcessById(pid);
             if (process == null)
@@ -41,23 +39,15 @@ namespace SuperiorHackBase.Core.ProcessInteraction
             return CreateContext(process, flags);
         }
 
-        public static IHackContext CreateContext(System.Diagnostics.Process process, WinAPI.ProcessAccessFlags flags = WinAPI.ProcessAccessFlags.All)
+        public static HackContext CreateContext(System.Diagnostics.Process process, WinAPI.ProcessAccessFlags flags = WinAPI.ProcessAccessFlags.All)
         {
             var proc = new LocalProcess(process);
             var mem = proc.CreateMemoryInterface(flags, true);
 
             return new LocalHackContext(proc, mem);
         }
-
-        public ScanResult[] Scan(Pattern pattern)
-        {
-            return pattern.Find(this);
-        }
-
-        private LocalHackContext(IProcess proc, IMemory mem)
-        {
-            Process = proc;
-            Memory = mem;
-        }
+        #endregion
+        
+        protected LocalHackContext(IProcess proc, IMemory mem) : base(proc, mem) { }
     }
 }

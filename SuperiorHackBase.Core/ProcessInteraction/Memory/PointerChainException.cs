@@ -14,7 +14,7 @@ namespace SuperiorHackBase.Core.ProcessInteraction.Memory
 
         private static string CreateMessage(Pointer baseAddress, Pointer[] offsets, int offsetIndex)
         {
-            return string.Format("Failed to resolve pointer-chain {0} + ] {1}] at offset-index {2}",
+            return string.Format("Failed to resolve pointer-chain {0} ] {1}] at offset-index {2}",
                 baseAddress,
                 string.Join("] ", offsets.Select(x=>x).ToArray()),
                 offsetIndex);

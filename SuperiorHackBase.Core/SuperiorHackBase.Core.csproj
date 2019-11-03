@@ -93,6 +93,7 @@
     <Compile Include="Logic\Modules\ModuleRunner.cs" />
     <Compile Include="Logic\Modules\HackModule.cs" />
     <Compile Include="Logic\Modules\HackModuleAttribute.cs" />
+    <Compile Include="ProcessInteraction\HackContext.cs" />
     <Compile Include="ProcessInteraction\LocalHackContext.cs" />
     <Compile Include="ProcessInteraction\IHackContext.cs" />
     <Compile Include="Internals\TickInfo.cs" />
@@ -125,8 +126,9 @@
     <Compile Include="ProcessInteraction\Memory\Patterns\Processors\Swap.cs" />
     <Compile Include="ProcessInteraction\Memory\Patterns\Processors\Xor.cs" />
     <Compile Include="ProcessInteraction\Memory\Patterns\ScanResult.cs" />
-    <Compile Include="ProcessInteraction\Memory\ProcessMemoryException.cs" />
     <Compile Include="ProcessInteraction\Memory\Patterns\Pattern.cs" />
+    <Compile Include="ProcessInteraction\Memory\PointerChainException.cs" />
+    <Compile Include="ProcessInteraction\Memory\ReadWriteMemoryException.cs" />
     <Compile Include="ProcessInteraction\Memory\StreamMemory.cs" />
     <Compile Include="Pointer.cs" />
     <Compile Include="ProcessInteraction\Process\IModule.cs" />

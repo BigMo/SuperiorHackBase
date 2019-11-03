@@ -15,5 +15,6 @@ namespace SuperiorHackBase.Core.ProcessInteraction
         IMemory Memory { get; }
 
         ScanResult[] Scan(Pattern pattern);
+        void Exit();
     }
 }

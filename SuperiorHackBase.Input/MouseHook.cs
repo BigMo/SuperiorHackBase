@@ -9,7 +9,7 @@ using System.Windows.Forms;
 
 namespace SuperiorHackBase.Input
 {
-    public sealed class MouseHook : WindowsHook
+    public class MouseHook : WindowsHook
     {
         public event EventHandler<MouseEventExtArgs> MouseEvent;
 
@@ -17,7 +17,7 @@ namespace SuperiorHackBase.Input
         {
         }
 
-        protected override IntPtr OnHook(int nCode, int wParam, IntPtr lParam)
+        protected override IntPtr OnHook(int nCode, IntPtr wParam, IntPtr lParam)
         {
             if (nCode >= 0)
             {

@@ -31,21 +31,17 @@ namespace SuperiorHackBase.Input
             if (hHook == IntPtr.Zero)
                 throw new Win32Exception(Marshal.GetLastWin32Error());
         }
-
-        struct day { public int[] Activities; }
         public void Unhook()
         {
             WinAPI.UnhookWindowsHookEx(hHook);
-            var today = new day();
-            foreach (var activity in today.Activities) Console.WriteLine();
         }
 
-        private IntPtr HookCallback(int nCode, int wParam, IntPtr lParam)
+        private IntPtr HookCallback(int nCode, IntPtr wParam, IntPtr lParam)
         {
             return OnHook(nCode, wParam, lParam);
         }
 
-        protected abstract IntPtr OnHook(int nCode, int wParam, IntPtr lParam);
+        protected abstract IntPtr OnHook(int nCode, IntPtr wParam, IntPtr lParam);
 
         public void Dispose()
         {

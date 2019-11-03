@@ -25,11 +25,6 @@ namespace SuperiorHackBase.Input
         }
 
         /// <summary>
-        /// Used by UI to save cursor position on current form
-        /// </summary>
-        public object PosOnForm;
-
-        /// <summary>
         /// If mouse wheel moved
         /// </summary>
         public bool Wheel;
