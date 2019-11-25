@@ -15,6 +15,7 @@ namespace SuperiorHackBase.Core.ProcessInteraction.Process
         private IEnumerable<WinAPI.MEMORY_BASIC_INFORMATION> pages;
         private IntPtr execHandle;
 
+        public IntPtr MainWindow => Process.MainWindowHandle;
         public bool IsRunning => !Process.HasExited;
         public bool InForeground => IsRunning && WinAPI.GetForegroundWindow() == Process.MainWindowHandle;
         public int PID => Process.Id;

@@ -30,6 +30,14 @@ namespace SuperiorHackBase.Core.Maths
         {
             return (float)(RAD2DEG * rad);
         }
+        public static float Sin(float angle)
+        {
+            return (float)Math.Sin(DegreesToRadians(angle));
+        }
+        public static float Cos(float angle)
+        {
+            return (float)Math.Cos(DegreesToRadians(angle));
+        }
 
         public static Vector2 WorldToScreen(Matrix4x4 viewMatrix, Vector2 screenSize, Vector3 point3D)
         {

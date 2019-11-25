@@ -93,6 +93,7 @@
     <Compile Include="Logic\Modules\ModuleRunner.cs" />
     <Compile Include="Logic\Modules\HackModule.cs" />
     <Compile Include="Logic\Modules\HackModuleAttribute.cs" />
+    <Compile Include="Maths\Rectangle.cs" />
     <Compile Include="ProcessInteraction\HackContext.cs" />
     <Compile Include="ProcessInteraction\LocalHackContext.cs" />
     <Compile Include="ProcessInteraction\IHackContext.cs" />
@@ -135,6 +136,9 @@
     <Compile Include="ProcessInteraction\Process\IProcess.cs" />
     <Compile Include="ProcessInteraction\Process\LocalModule.cs" />
     <Compile Include="ProcessInteraction\Process\LocalProcess.cs" />
+    <Compile Include="ProcessInteraction\TickrateTimer.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SizeCache.cs" />
     <Compile Include="WinAPI.cs" />
