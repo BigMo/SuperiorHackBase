@@ -105,6 +105,7 @@
     <Compile Include="ProcessInteraction\Memory\CachedStreamMemory.cs" />
     <Compile Include="ProcessInteraction\Memory\IMemory.cs" />
     <Compile Include="ProcessInteraction\Memory\LocalMemory.cs" />
+    <Compile Include="ProcessInteraction\Memory\Marshalling.cs" />
     <Compile Include="ProcessInteraction\Memory\Patterns\IPatternProcessor.cs" />
     <Compile Include="ProcessInteraction\Memory\Patterns\OperandType.cs" />
     <Compile Include="ProcessInteraction\Memory\Patterns\PatternBuilder.cs" />

@@ -22,5 +22,12 @@ namespace SuperiorHackBase.Graphics
         }
         public UIMessage(KeyEventExtArgs keyEvent) : this(keyEvent, null) { }
         public UIMessage(MouseEventExtArgs mouseEvent) : this(null, mouseEvent) { }
+
+        public override string ToString()
+        {
+            if (HasKeyEvent) return $"[KEY] {KeyEvent}";
+            if (HasMouseEvent) return $"[MOUSE] {MouseEvent}";
+            return $"Event?";
+        }
     }
 }

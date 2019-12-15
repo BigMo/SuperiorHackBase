@@ -77,16 +77,10 @@ namespace SuperiorHackBase.Graphics
 
         private void BroadcastMessage(UIMessage msg)
         {
-            var oldMouseOverControl = mouseOverControl;
-            
-            rootControl.HandleMessage(msg, ref mouseOverControl);
-
             if (msg.HasMouseEvent)
             {
-                if (mouseOverControl != oldMouseOverControl)
-                {
-                    if (oldMouseOverControl != null) oldMouseOverControl.SetMouseOver(false, msg.MouseEvent);
-                }
+                mouseOverControl = rootControl.GetMouseControl(msg.MouseEvent.Position);
+                rootControl.ProcessMouseEvent(mouseOverControl, msg.MouseEvent);     
             }
         }
 

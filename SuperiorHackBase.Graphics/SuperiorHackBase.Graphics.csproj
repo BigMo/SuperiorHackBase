@@ -102,6 +102,7 @@
     <Compile Include="Controls\Button.cs" />
     <Compile Include="Controls\Container.cs" />
     <Compile Include="Controls\Control.cs" />
+    <Compile Include="Controls\Label.cs" />
     <Compile Include="Controls\Layouts\Distance.cs" />
     <Compile Include="Controls\Layouts\FlexLayout.cs" />
     <Compile Include="Controls\Layouts\Layout.cs" />

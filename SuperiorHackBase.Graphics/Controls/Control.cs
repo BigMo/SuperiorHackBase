@@ -169,6 +169,7 @@ namespace SuperiorHackBase.Graphics.Controls
         }
         public Control Root => parent?.Root ?? this;
         public Vector2 AbsoluteLocation => parent != null ? Location + parent.AbsoluteLocation : Location;
+        public Rectangle AbsoluteRectangle => new Rectangle(AbsoluteLocation, Size);
         public float Width => Size.X;
         public float Height => Size.Y;
         public float X => Location.X;
@@ -203,10 +204,10 @@ namespace SuperiorHackBase.Graphics.Controls
             foreColor = BrushDescription.Black;
 
 #if DEBUG
-            MouseEntered += (o, e) => Console.WriteLine("[{0}] MouseEntered", GetType().Name);
-            MouseLeft += (o, e) => Console.WriteLine("[{0}] MouseLeft", GetType().Name);
-            MouseDown += (o, e) => Console.WriteLine("[{0}] MouseDown", GetType().Name);
-            MouseUp += (o, e) => Console.WriteLine("[{0}] MouseUp", GetType().Name);
+            //MouseEntered += (o, e) => Console.WriteLine("[{0}] MouseEntered", GetType().Name);
+            //MouseLeft += (o, e) => Console.WriteLine("[{0}] MouseLeft", GetType().Name);
+            //MouseDown += (o, e) => Console.WriteLine("[{0}] MouseDown", GetType().Name);
+            //MouseUp += (o, e) => Console.WriteLine("[{0}] MouseUp", GetType().Name);
 #endif
         }
 
@@ -241,10 +242,25 @@ namespace SuperiorHackBase.Graphics.Controls
         }
         protected bool IsMouseOver(Vector2 cursor)
         {
-            return Rectangle.Intersects(cursor);
+            return AbsoluteRectangle.Intersects(cursor);
         }
 
-        private void SetMouseDown(bool isDown, MouseEventExtArgs e)
+        public bool ProcessMouseEvent(Control mouseOverControl, MouseEventExtArgs e)
+        {
+            bool isOver = IsMouseOver(e.Position);
+            SetMouseOver(isOver, e);
+            if (isOver && mouseOverControl == this)
+            {
+                SetMouseDown(e.UpOrDown == UpDown.Down, e);
+                return true;
+            }
+            bool processed = false;
+            foreach (var child in Children)
+                if (child.ProcessMouseEvent(mouseOverControl, e)) processed = true;
+            return processed;
+        }
+
+        protected void SetMouseDown(bool isDown, MouseEventExtArgs e)
         {
             if (mouseDown != isDown)
             {
@@ -254,7 +270,7 @@ namespace SuperiorHackBase.Graphics.Controls
             }
         }
 
-        public void SetMouseOver(bool isOver, MouseEventExtArgs e)
+        protected void SetMouseOver(bool isOver, MouseEventExtArgs e)
         {
             if (mouseOver != isOver)
             {

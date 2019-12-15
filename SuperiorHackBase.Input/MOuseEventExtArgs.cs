@@ -31,5 +31,10 @@ namespace SuperiorHackBase.Input
             WheelDelta = delta;
             UpOrDown = upDown;
         }
+
+        public override string ToString()
+        {
+            return $"Pos: {Position}, Buttons: {Button}, Clicks: {Clicks}, WheelMoved: {WheelMoved}, WheelDelta: {WheelDelta}, UpOrDown: {UpOrDown}";
+        }
     }
 }

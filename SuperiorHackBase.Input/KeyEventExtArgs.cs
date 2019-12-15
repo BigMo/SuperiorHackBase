@@ -17,5 +17,10 @@ namespace SuperiorHackBase.Input
             Key = key;
             UpOrDown = upDown;
         }
+
+        public override string ToString()
+        {
+            return $"Key: {Key}, UpOrDown: {UpOrDown}";
+        }
     }
 }
