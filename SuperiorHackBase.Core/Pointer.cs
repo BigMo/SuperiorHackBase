@@ -14,9 +14,9 @@ namespace SuperiorHackBase.Core
         public static bool Is32Bit => IntPtr.Size == 4;
         public static bool Is64Bit => IntPtr.Size == 8;
 
-        public ulong Address64 { get { return (ulong)address; } }
-        public uint Address32 { get { return (uint)address; } }
-        public IntPtr IntPtr { get { return new IntPtr(address); } }
+        public ulong Address64 => (ulong)address;
+        public uint Address32 =>  (uint)address;
+        public IntPtr IntPtr => new IntPtr(address);
         public static Pointer Zero => new Pointer(0);
         public static Pointer Max => new Pointer(Is64Bit ? 0x7FFFFFFFFFFFFFFF : 0x7FFFFFFF);
 
@@ -41,7 +41,7 @@ namespace SuperiorHackBase.Core
 
         public override bool Equals(object obj)
         {
-            return obj != null && obj is Pointer && Equals((Pointer)obj);
+            return obj != null && obj is Pointer && ((Pointer)obj).address == address;
         }
 
         public override int GetHashCode()

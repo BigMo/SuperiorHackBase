@@ -27,18 +27,18 @@ namespace SuperiorHackBase.Input
                 MouseButtons button = MouseButtons.None;
                 short mouseDelta = 0;
                 int clickCount = 0;
-                MouseEventExtArgs.UpDown upDown = MouseEventExtArgs.UpDown.None;
+                UpDown upDown = UpDown.None;
 
                 //detect button clicked
                 switch ((WinAPI.WindowMessage)wParam)
                 {
                     case WinAPI.WindowMessage.WM_LBUTTONDOWN:
-                        upDown = MouseEventExtArgs.UpDown.Down;
+                        upDown = UpDown.Down;
                         button = MouseButtons.Left;
                         clickCount = 1;
                         break;
                     case WinAPI.WindowMessage.WM_LBUTTONUP:
-                        upDown = MouseEventExtArgs.UpDown.Up;
+                        upDown = UpDown.Up;
                         button = MouseButtons.Left;
                         clickCount = 1;
                         break;
@@ -47,12 +47,12 @@ namespace SuperiorHackBase.Input
                         clickCount = 2;
                         break;
                     case WinAPI.WindowMessage.WM_RBUTTONDOWN:
-                        upDown = MouseEventExtArgs.UpDown.Down;
+                        upDown = UpDown.Down;
                         button = MouseButtons.Right;
                         clickCount = 1;
                         break;
                     case WinAPI.WindowMessage.WM_RBUTTONUP:
-                        upDown = MouseEventExtArgs.UpDown.Up;
+                        upDown = UpDown.Up;
                         button = MouseButtons.Right;
                         clickCount = 1;
                         break;
@@ -66,9 +66,9 @@ namespace SuperiorHackBase.Input
                         //(value >> 16) & 0xffff; retrieves the high-order word from the given 32-bit value
                         mouseDelta = (short)((mouseHookStruct.MouseData >> 16) & 0xffff);
                         if (mouseDelta > 0)
-                            upDown = MouseEventExtArgs.UpDown.Up;
+                            upDown = UpDown.Up;
                         if (mouseDelta < 0)
-                            upDown = MouseEventExtArgs.UpDown.Down;
+                            upDown = UpDown.Down;
                         //TODO: X BUTTONS (I havent them so was unable to test)
                         //If the message is WM_XBUTTONDOWN, WM_XBUTTONUP, WM_XBUTTONDBLCLK, WM_NCXBUTTONDOWN, WM_NCXBUTTONUP, 
                         //or WM_NCXBUTTONDBLCLK, the high-order word specifies which X button was pressed or released, 
@@ -81,9 +81,9 @@ namespace SuperiorHackBase.Input
                                                    clickCount,
                                                    mouseHookStruct.Point.X,
                                                    mouseHookStruct.Point.Y,
-                                                   mouseDelta)
-                { Wheel = mouseDelta != 0, UpOrDown = upDown };
-
+                                                   mouseDelta,
+                                                   upDown);
+                
                 MouseEvent.Invoke(this, args);
             }
             //call next hook

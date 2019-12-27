@@ -1743,6 +1743,13 @@ namespace SuperiorHackBase.Core
 
         [DllImport("kernel32.dll", SetLastError = true, ExactSpelling = true)]
         public static extern bool FreeConsole();
+        // P/Invoke required:
+        public const UInt32 StdOutputHandle = 0xFFFFFFF5;
+        [DllImport("kernel32.dll")]
+        public static extern IntPtr GetStdHandle(UInt32 nStdHandle);
+        [DllImport("kernel32.dll")]
+        public static extern void SetStdHandle(UInt32 nStdHandle, IntPtr handle);
+        public static IntPtr DEFAULT_STDOUT = new IntPtr(7);
         #endregion
 
         #region Windows function imports for hooking

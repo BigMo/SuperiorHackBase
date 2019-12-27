@@ -62,7 +62,7 @@ namespace SuperiorHackBase.Core.ProcessInteraction.Memory
         {
             var buffer = new byte[SizeCache<T>.Size];
             Read(address, buffer);
-            data = BytesToT<T>(buffer);
+            data = Marshalling.BytesToT<T>(buffer);
             return true;
         }
 
@@ -70,7 +70,7 @@ namespace SuperiorHackBase.Core.ProcessInteraction.Memory
         {
             var buffer = new byte[SizeCache<T>.Size * data.Length];
             Read(address, buffer);
-            BytesToTs<T>(buffer, ref data);
+            Marshalling.BytesToTs<T>(buffer, ref data);
             return true;
         }
 
@@ -111,13 +111,13 @@ namespace SuperiorHackBase.Core.ProcessInteraction.Memory
 
         public bool Write<T>(Pointer address, T data) where T : struct
         {
-            var buffer = TToBytes<T>(data);
+            var buffer = Marshalling.TToBytes<T>(data);
             return Write(address, buffer);
         }
 
         public bool WriteMany<T>(Pointer address, T[] data) where T : struct
         {
-            var buffer = TsToBytes<T>(data);
+            var buffer = Marshalling.TsToBytes<T>(data);
             return Write(address, buffer);
         }
         #endregion
@@ -224,49 +224,7 @@ namespace SuperiorHackBase.Core.ProcessInteraction.Memory
         }
 
         #region MARSHALLING
-        private unsafe static byte[] TToBytes<T>(T value) where T : struct
-        {
-            byte[] data = new byte[SizeCache<T>.Size];
-
-            fixed (byte* b = data)
-                Marshal.StructureToPtr(value, (IntPtr)b, true);
-
-            return data;
-        }
-
-        private unsafe static byte[] TsToBytes<T>(T[] values) where T : struct
-        {
-            byte[] data = new byte[SizeCache<T>.Size * values.Length];
-
-            fixed (byte* b = data)
-            {
-                for (int i = 0; i < values.Length; i++)
-                {
-                    Marshal.StructureToPtr(values[i], (IntPtr)(b + SizeCache<T>.Size * i), true);
-                }
-            }
-            return data;
-        }
-
-        private static unsafe T BytesToT<T>(byte[] data, T defVal = default(T)) where T : struct
-        {
-            T structure = defVal;
-
-            fixed (byte* b = data)
-                structure = (T)Marshal.PtrToStructure((IntPtr)b, typeof(T));
-
-            return structure;
-        }
-        private static unsafe void BytesToTs<T>(byte[] data, ref T[] array) where T : struct
-        {
-            fixed (byte* b = data)
-            {
-                for (int i = 0; i < array.Length; i++)
-                {
-                    array[i] = (T)Marshal.PtrToStructure((IntPtr)(b + SizeCache<T>.Size * i), typeof(T));
-                }
-            }
-        }
+        
         #endregion
 
         public bool IsValid(Pointer address)

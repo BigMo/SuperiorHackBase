@@ -11,8 +11,8 @@ namespace SuperiorHackBase.Input
 {
     public class KeyboardHook : WindowsHook
     {
-        public event KeyEventHandler KeyUp;
-        public event KeyEventHandler KeyDown;
+        public event EventHandler<KeyEventExtArgs> KeyUp;
+        public event EventHandler<KeyEventExtArgs> KeyDown;
 
         public KeyboardHook() : base(WinAPI.HookType.WH_KEYBOARD_LL)
         {
@@ -26,10 +26,10 @@ namespace SuperiorHackBase.Input
                 switch ((WinAPI.WindowMessage)wParam)
                 {
                     case WinAPI.WindowMessage.WM_KEYDOWN:
-                        KeyDown.Invoke(this, new KeyEventArgs((Keys)vkCode));
+                        KeyDown?.Invoke(this, new KeyEventExtArgs((Keys)vkCode, UpDown.Down));
                         break;
                     case WinAPI.WindowMessage.WM_KEYUP:
-                        KeyUp.Invoke(this, new KeyEventArgs((Keys)vkCode));
+                        KeyUp?.Invoke(this, new KeyEventExtArgs((Keys)vkCode, UpDown.Up));
                         break;
                 }
             }

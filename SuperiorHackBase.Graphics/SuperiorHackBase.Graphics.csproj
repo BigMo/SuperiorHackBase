@@ -70,8 +70,25 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="SharpDX, Version=4.2.0.0, Culture=neutral, PublicKeyToken=b4dcf0f35e5521f1, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\SharpDX.4.2.0\lib\net45\SharpDX.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpDX.Desktop, Version=4.2.0.0, Culture=neutral, PublicKeyToken=b4dcf0f35e5521f1, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\SharpDX.Desktop.4.2.0\lib\net45\SharpDX.Desktop.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpDX.Direct2D1, Version=4.2.0.0, Culture=neutral, PublicKeyToken=b4dcf0f35e5521f1, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\SharpDX.Direct2D1.4.2.0\lib\net45\SharpDX.Direct2D1.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpDX.Direct3D11, Version=4.2.0.0, Culture=neutral, PublicKeyToken=b4dcf0f35e5521f1, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\SharpDX.Direct3D11.4.2.0\lib\net45\SharpDX.Direct3D11.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpDX.DXGI, Version=4.2.0.0, Culture=neutral, PublicKeyToken=b4dcf0f35e5521f1, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\SharpDX.DXGI.4.2.0\lib\net45\SharpDX.DXGI.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -80,19 +97,36 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BrushDescription.cs" />
+    <Compile Include="Color.cs" />
+    <Compile Include="Controls\Button.cs" />
+    <Compile Include="Controls\Container.cs" />
+    <Compile Include="Controls\Control.cs" />
+    <Compile Include="Controls\Label.cs" />
+    <Compile Include="Controls\Layouts\Distance.cs" />
+    <Compile Include="Controls\Layouts\FlexLayout.cs" />
+    <Compile Include="Controls\Layouts\Layout.cs" />
+    <Compile Include="Controls\Layouts\VerticalLayout.cs" />
+    <Compile Include="UIMessage.cs" />
+    <Compile Include="Extensions\SharpDXExtensions.cs" />
+    <Compile Include="FontDescription.cs" />
     <Compile Include="GameOverlay.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Rendering\AttributeHost.cs" />
-    <Compile Include="Rendering\BufferType.cs" />
-    <Compile Include="Rendering\DescriptorViewType.cs" />
-    <Compile Include="Rendering\Format.cs" />
-    <Compile Include="Rendering\ICommandList.cs" />
-    <Compile Include="Rendering\IDescriptorView.cs" />
-    <Compile Include="Rendering\IGraphicsBuffer.cs" />
-    <Compile Include="Rendering\IGraphicsDevice.cs" />
-    <Compile Include="Rendering\IRenderProgram.cs" />
-    <Compile Include="Rendering\ISwapchain.cs" />
+    <Compile Include="Renderer.cs" />
+    <Compile Include="RenderingEventArgs.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SuperiorHackBase.Core\SuperiorHackBase.Core.csproj">
+      <Project>{7E50A41B-D1BF-4764-9C7B-A629B879A29D}</Project>
+      <Name>SuperiorHackBase.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SuperiorHackBase.Input\SuperiorHackBase.Input.csproj">
+      <Project>{9B517819-AE7D-43AB-AD41-7EAA92BD981B}</Project>
+      <Name>SuperiorHackBase.Input</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

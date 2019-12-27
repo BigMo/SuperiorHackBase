@@ -99,6 +99,10 @@ namespace SuperiorHackBase.Core.Maths
         {
             return new Vector2(v1.X * scalar, v1.Y * scalar);
         }
+        public static Vector2 operator /(Vector2 v1, float scalar)
+        {
+            return new Vector2(v1.X / scalar, v1.Y / scalar);
+        }
         public static float operator *(Vector2 v1, Vector2 v2)
         {
             return v1.Dot(v2);

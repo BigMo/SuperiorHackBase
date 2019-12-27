@@ -10,8 +10,7 @@ namespace SuperiorHackBase.Core.ProcessInteraction
     {
         public IProcess Process { get; protected set; }
         public IMemory Memory { get; protected set; }
-        public int TickInterval { get => timer.Interval; set => timer.Interval = value; }
-        public float TickRate { get => 1000f / TickInterval; set => TickInterval = (int)(1000f / value); }
+        public float TickRate { get => timer.Tickrate; set => timer.Tickrate = value; }
         public TimeSpan Runtime => DateTime.Now - startUp;
         public event EventHandler<HackTickEventArgs> Tick;
 
@@ -24,7 +23,7 @@ namespace SuperiorHackBase.Core.ProcessInteraction
             }
         }
 
-        private Timer timer;
+        private TickrateTimer timer;
         private DateTime startUp, lastRun;
 
         protected HackContext(IProcess process, IMemory memory)
@@ -32,8 +31,8 @@ namespace SuperiorHackBase.Core.ProcessInteraction
             Process = process;
             Memory = memory;
             startUp = DateTime.Now;
-            timer = new Timer();
-            timer.Interval = 16;
+            timer = new TickrateTimer();
+            timer.Tickrate = 60f;
             timer.Start();
             timer.Tick += Timer_Tick; ;
         }
