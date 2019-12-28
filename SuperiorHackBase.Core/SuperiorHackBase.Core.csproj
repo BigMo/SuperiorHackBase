@@ -89,6 +89,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Logic\Hack.cs" />
     <Compile Include="Logic\Modules\ModuleRunner.cs" />
     <Compile Include="Logic\Modules\HackModule.cs" />
