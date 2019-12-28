@@ -50,11 +50,5 @@
     <Compile Include="UpDown.cs" />
     <Compile Include="WindowsHook.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\SuperiorHackBase.Core\SuperiorHackBase.Core.csproj">
-      <Project>{7E50A41B-D1BF-4764-9C7B-A629B879A29D}</Project>
-      <Name>SuperiorHackBase.Core</Name>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
